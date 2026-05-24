@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Interactive gravitational-wave chirp simulator for compact binary inspirals.">
+    <title>Gravitational Wave Chirp Lab</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+    <main class="app">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Compact Binary Inspiral</p>
+          <h1>Gravitational Wave Chirp Lab</h1>
+        </div>
+        <div class="metrics">
+          <p><span>Chirp mass</span><strong id="chirpMass">26.1 Msun</strong></p>
+          <p><span>ISCO frequency</span><strong id="iscoFrequency">157 Hz</strong></p>
+          <p><span>Relative strain</span><strong id="strain">1.00</strong></p>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel">
+          <h2>Binary Parameters</h2>
+          <label>Primary mass <output id="m1Out">36 Msun</output><input id="m1" type="range" min="3" max="80" value="36" step="1"></label>
+          <label>Secondary mass <output id="m2Out">29 Msun</output><input id="m2" type="range" min="3" max="80" value="29" step="1"></label>
+          <label>Luminosity distance <output id="distanceOut">410 Mpc</output><input id="distance" type="range" min="50" max="2000" value="410" step="10"></label>
+          <label>Final seconds <output id="durationOut">6.0 s</output><input id="duration" type="range" min="1" max="12" value="6" step="0.5"></label>
+          <label>Starting frequency <output id="f0Out">28 Hz</output><input id="f0" type="range" min="12" max="80" value="28" step="1"></label>
+        </aside>
+
+        <section class="plots">
+          <article class="panel">
+            <h2>Strain Waveform</h2>
+            <canvas id="waveCanvas" width="980" height="360"></canvas>
+          </article>
+          <article class="panel">
+            <h2>Frequency Evolution</h2>
+            <canvas id="freqCanvas" width="980" height="280"></canvas>
+          </article>
+        </section>
+      </section>
+
+      <section class="panel notes">
+        <p><strong>Model:</strong> Newtonian-order chirp approximation with amplitude scaled by chirp mass and distance. It is intended for intuition, not parameter estimation.</p>
+      </section>
+    </main>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

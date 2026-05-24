@@ -1,0 +1,5 @@
+check,value,expected,passed
+chirp_mass_symmetry,0.0,0.0,True
+gw150914_like_chirp_mass_msun,28.09555579546043,about 28,True
+frequency_monotonic,0.0,>= 0,True
+distance_halving_ratio,0.5,0.5,True
