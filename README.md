@@ -60,6 +60,10 @@ python tools/generate_chirp.py
 python tools/validate_model.py
 ```
 
+## README Image Prompt
+
+A README hero image prompt is provided in [`docs/image_prompt.md`](docs/image_prompt.md). It is designed for a serious compact-binary research visual rather than a generic space illustration.
+
 ## Limitations
 
 This is not a numerical relativity model and does not include detector antenna response, post-Newtonian phase terms, spins, eccentricity, merger-ringdown physics, or real LIGO/Virgo/KAGRA data.
