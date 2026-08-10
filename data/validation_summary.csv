@@ -4,3 +4,4 @@ positive_frequency_derivative,8.871111063976237,> 0,True
 frequency_monotonic,47.64679683942977,>= 0,True
 isco_not_exceeded,67.64679683942977,67.64679683942977,True
 inverse_distance_amplitude,0.5,0.5,True
+gw150914_chirp_mass_consistent_with_published_estimate,28.09555579546043,~28.1 Msun (Abbott et al. 2016),True

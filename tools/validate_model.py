@@ -52,6 +52,15 @@ def main() -> None:
                 rel_tol=1e-12,
             ),
         },
+        {
+            "check": "gw150914_chirp_mass_consistent_with_published_estimate",
+            "value": mass_forward,
+            "expected": "~28.1 Msun (Abbott et al. 2016)",
+            # The default source (36 + 29 Msun) mirrors the GW150914 discovery-paper
+            # source-frame estimates; the resulting chirp mass should land close to the
+            # published ~28.1 Msun value as a sanity check on the formula, not a fit.
+            "passed": math.isclose(mass_forward, 28.1, abs_tol=1.0),
+        },
     ]
     output = Path(__file__).resolve().parents[1] / "data" / "validation_summary.csv"
     with output.open("w", newline="", encoding="utf-8") as handle:
