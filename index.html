@@ -3,51 +3,135 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Interactive gravitational-wave chirp simulator for compact binary inspirals.">
-    <title>Gravitational Wave Chirp Lab</title>
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="description" content="GWOSC observation-led GW150914 strain laboratory with optional post-Newtonian inspiral comparison.">
+    <title>GW Chirp Lab | GWOSC Observation Console</title>
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/app.js" defer></script>
   </head>
   <body>
-    <main class="app">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">Compact Binary Inspiral</p>
-          <h1>Gravitational Wave Chirp Lab</h1>
-        </div>
-        <div class="metrics">
-          <p><span>Chirp mass</span><strong id="chirpMass">26.1 Msun</strong></p>
-          <p><span>ISCO frequency</span><strong id="iscoFrequency">157 Hz</strong></p>
-          <p><span>Relative strain</span><strong id="strain">1.00</strong></p>
-        </div>
-      </section>
+    <div class="instrument">
+      <header class="command-bar">
+        <section class="brand">
+          <p>GWOSC CALIBRATED STRAIN / GW150914-V3 / EVENT ANALYSIS</p>
+          <h1>GRAVITATIONAL WAVE CHIRP LAB</h1>
+          <span>MEASURED DETECTOR STRAIN / TIME-FREQUENCY MAP / OPTIONAL PN OVERLAY</span>
+        </section>
+        <dl class="health">
+          <div><dt>ENGINE</dt><dd><i id="engine-light"></i><span id="engine-state">BOOT</span></dd></div>
+          <div><dt>UTC</dt><dd id="utc">--:--:--</dd></div>
+          <div><dt>RENDER</dt><dd id="fps">-- FPS</dd></div>
+          <div><dt>CURSOR</dt><dd id="cursor-time">-- s</dd></div>
+        </dl>
+        <nav>
+          <button id="play" class="active" type="button">PAUSE</button>
+          <button id="export" type="button">EXPORT STRAIN</button>
+          <button id="reset" type="button">RESET</button>
+        </nav>
+      </header>
 
-      <section class="workspace">
-        <aside class="panel">
-          <h2>Binary Parameters</h2>
-          <label>Primary mass <output id="m1Out">36 Msun</output><input id="m1" type="range" min="3" max="80" value="36" step="1"></label>
-          <label>Secondary mass <output id="m2Out">29 Msun</output><input id="m2" type="range" min="3" max="80" value="29" step="1"></label>
-          <label>Luminosity distance <output id="distanceOut">410 Mpc</output><input id="distance" type="range" min="50" max="2000" value="410" step="10"></label>
-          <label>Final seconds <output id="durationOut">6.0 s</output><input id="duration" type="range" min="1" max="12" value="6" step="0.5"></label>
-          <label>Starting frequency <output id="f0Out">28 Hz</output><input id="f0" type="range" min="12" max="80" value="28" step="1"></label>
+      <main class="layout">
+        <aside class="controls panel">
+          <header><h2>DATA + MODEL CONTROL</h2><span>GWOSC / SI</span></header>
+          <fieldset>
+            <legend>OBSERVED EVENT</legend>
+            <p class="dataset">GW150914-v3 / GWTC-1-CONFIDENT</p>
+            <label>DETECTOR <output id="detector-value">H1</output>
+              <select id="detector">
+                <option value="H1" selected>Hanford H1</option>
+                <option value="L1">Livingston L1</option>
+              </select>
+            </label>
+            <label>EVENT WINDOW <output id="window-value">2.0 s</output>
+              <input id="window" type="range" min="0.5" max="4" step="0.1" value="2">
+            </label>
+            <label>PN COMPARISON <output id="modelOverlay-value">OFF</output>
+              <input id="modelOverlay" type="checkbox">
+            </label>
+          </fieldset>
+          <fieldset class="model-parameters">
+            <legend>PN COMPARISON BINARY</legend>
+            <label>PRIMARY MASS <output id="mass1-value">36.0 Msun</output>
+              <input id="mass1" type="range" min="3" max="120" step="0.1" value="36">
+            </label>
+            <label>SECONDARY MASS <output id="mass2-value">29.0 Msun</output>
+              <input id="mass2" type="range" min="3" max="120" step="0.1" value="29">
+            </label>
+            <label>DISTANCE <output id="distance-value">410 Mpc</output>
+              <input id="distance" type="range" min="10" max="5000" step="10" value="410">
+            </label>
+            <label>INCLINATION <output id="inclination-value">30 deg</output>
+              <input id="inclination" type="range" min="0" max="90" step="1" value="30">
+            </label>
+          </fieldset>
+          <fieldset class="model-parameters">
+            <legend>PN COMPARISON EVOLUTION</legend>
+            <label>START FREQUENCY <output id="startFrequency-value">20.0 Hz</output>
+              <input id="startFrequency" type="range" min="5" max="120" step="0.5" value="20">
+            </label>
+            <label>PLAYBACK RATE <output id="playbackRate-value">1.00 x</output>
+              <input id="playbackRate" type="range" min="0.1" max="4" step="0.05" value="1">
+            </label>
+          </fieldset>
+          <section class="equations model-parameters">
+            <h2>PN OVERLAY MODEL</h2>
+            <p>M = (m1 m2)^(3/5) / (m1 + m2)^(1/5)</p>
+            <p>df/dt = (96/5) pi^(8/3) (G M/c^3)^(5/3) f^(11/3)</p>
+            <p>h+ = A(f) [(1 + cos^2 i)/2] cos(phi)</p>
+          </section>
         </aside>
 
-        <section class="plots">
-          <article class="panel">
-            <h2>Strain Waveform</h2>
-            <canvas id="waveCanvas" width="980" height="360"></canvas>
+        <section class="display">
+          <section class="metrics" aria-label="Derived source quantities">
+            <article><h2>DATASET</h2><strong id="chirp-mass">--</strong><span id="total-mass">GWOSC</span></article>
+            <article><h2>FILTER BAND</h2><strong id="isco">35-350 Hz</strong><span>CONDITIONED DISPLAY</span></article>
+            <article><h2>PEAK |h|</h2><strong id="peak-strain">--</strong><span>MEASURED STRAIN</span></article>
+            <article><h2>GPS EVENT</h2><strong id="final-frequency">--</strong><span id="termination">--</span></article>
+            <article><h2>WORKER SOLVE</h2><strong id="solve-time">-- ms</strong><span id="samples">-- SAMPLES</span></article>
+          </section>
+
+          <article class="plot panel waveform">
+            <header>
+              <div><h2>CONDITIONED DETECTOR STRAIN h(t)</h2><span>GWOSC OBSERVED / PN OVERLAY IN AMBER</span></div>
+              <p id="sample-cursor">--</p>
+            </header>
+            <canvas id="waveform" aria-label="Time-domain gravitational wave strain plot"></canvas>
           </article>
-          <article class="panel">
-            <h2>Frequency Evolution</h2>
-            <canvas id="freqCanvas" width="980" height="280"></canvas>
+          <article class="plot panel spectrogram">
+            <header>
+              <div><h2>OBSERVED EVENT SPECTROGRAM</h2><span>GWOSC STRAIN / HANN-WINDOW STFT</span></div>
+              <p id="spectrogram-meta">--</p>
+            </header>
+            <canvas id="spectrogram" aria-label="Frequency versus time gravitational wave spectrogram"></canvas>
           </article>
         </section>
-      </section>
 
-      <section class="panel notes">
-        <p><strong>Model:</strong> Newtonian-order chirp approximation with amplitude scaled by chirp mass and distance. It is intended for intuition, not parameter estimation.</p>
-      </section>
-    </main>
-    <footer class="site-footer">Biswajit@2026</footer>
-    <script src="assets/js/app.js"></script>
+        <aside class="diagnostics">
+          <article class="plot panel frequency">
+            <header><div><h2>PN FREQUENCY TRACK</h2><span>COMPARISON OVERLAY ONLY</span></div></header>
+            <canvas id="frequency" aria-label="Optional post-Newtonian inspiral frequency evolution"></canvas>
+          </article>
+          <article class="panel data">
+            <header><h2>LIVE SAMPLE</h2><span>OBSERVED PLAYBACK</span></header>
+            <dl>
+              <dt>TIME</dt><dd id="live-time">-- s</dd>
+              <dt>DETECTOR</dt><dd id="live-frequency">--</dd>
+              <dt>STRAIN</dt><dd id="live-strain">--</dd>
+              <dt>GPS</dt><dd id="live-dfdt">--</dd>
+            </dl>
+          </article>
+          <article class="panel log">
+            <header><h2>EVENT LOG</h2><span>NUMERICAL STATUS</span></header>
+            <ol id="events"><li>Initialising inspiral worker...</li></ol>
+          </article>
+          <article class="panel notice">
+            <header><h2>DATA SCOPE</h2><span>OBSERVATION FIRST</span></header>
+            <p>Waveform and spectrogram use public calibrated GWOSC detector strain for GW150914. The optional PN curve is a leading-order comparison model and excludes merger, ringdown and full detector-response inference.</p>
+          </article>
+        </aside>
+      </main>
+      <footer>GWCL / GWOSC OBSERVATION CONSOLE <span id="status">LOADING WORKER</span> CALIBRATED STRAIN / WORKER FFT / OPTIONAL PN</footer>
+    </div>
   </body>
 </html>

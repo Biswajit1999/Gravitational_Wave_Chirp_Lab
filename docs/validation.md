@@ -1,23 +1,14 @@
-# Validation Notes
+# Validation Protocol
 
-## Checks Implemented
+Run the independent reference implementation with a functioning Python 3 interpreter:
 
-1. **Chirp mass symmetry**
+```bash
+python tools/generate_chirp.py
+python tools/validate_model.py
+```
 
-   Swapping `m1` and `m2` must not change `Mc`.
-
-2. **Frequency monotonicity**
-
-   The leading-order inspiral frequency derivative is positive for positive mass and frequency, so the synthetic frequency track must increase with time until capped by the ISCO reference.
-
-3. **Distance scaling**
-
-   Relative strain should scale inversely with distance. Doubling the luminosity distance should halve the relative amplitude scale.
-
-4. **Mass scaling**
-
-   Increasing chirp mass should increase both the amplitude scale and the frequency derivative.
-
-## Scientific Scope
-
-This project validates the internal behaviour of a leading-order educational model. It does not validate waveform faithfulness against post-Newtonian, effective-one-body, numerical-relativity, or detector-calibrated waveform families.
+The tests verify chirp-mass symmetry, the analytic SI value of the Schwarzschild ISCO frequency,
+monotonically increasing frequency below termination, exact inverse-distance amplitude scaling,
+positive `df/dt`, and termination without crossing the ISCO bound. These checks establish
+internal physical and unit consistency; they do not establish waveform faithfulness for
+parameter estimation or merger-ringdown analysis.

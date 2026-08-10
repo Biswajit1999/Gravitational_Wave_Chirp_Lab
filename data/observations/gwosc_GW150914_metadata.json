@@ -1,0 +1,32 @@
+{
+  "dataset": "GWOSC GW150914-v3 calibrated detector strain",
+  "event": "GW150914",
+  "eventGpsSeconds": 1126259462.423,
+  "segmentStartGpsSeconds": 1126259447,
+  "durationSeconds": 32,
+  "sampleRateHz": 4096,
+  "sourceApi": "https://gwosc.org/api/v2/event-versions/GW150914-v3/strain-files?format=api",
+  "products": {
+    "H1": {
+      "file": "H-H1_GWOSC_4KHZ_R1-1126259447-32.txt.gz",
+      "officialUrl": "https://gwosc.org/eventapi/json/GWTC-1-confident/GW150914/v3/H-H1_GWOSC_4KHZ_R1-1126259447-32.txt.gz",
+      "bytes": 1286320,
+      "sha256": "fefe8717306109460b6c9cff74da6beb9e80ee624824b4b09bdd2c54ce9b4dfc",
+      "samples": 131072
+    },
+    "L1": {
+      "file": "L-L1_GWOSC_4KHZ_R1-1126259447-32.txt.gz",
+      "officialUrl": "https://gwosc.org/eventapi/json/GWTC-1-confident/GW150914/v3/L-L1_GWOSC_4KHZ_R1-1126259447-32.txt.gz",
+      "bytes": 1219514,
+      "sha256": "43d30a710d6ed4a8f27d13f45182f3825cbe99f87287b518618c8ff0e25e0d7c",
+      "samples": 131072
+    }
+  },
+  "displayProcessing": {
+    "conditioning": "Worker removes the selected event-window mean, applies an edge taper and a 35-350 Hz FFT-domain band pass.",
+    "spectrogram": "Worker STFT of the conditioned released detector strain.",
+    "comparison": "Leading-order PN strain is an optional amber overlay only."
+  },
+  "interpretation": "The cyan waveform and spectrogram originate from GWOSC measured strain. The amber PN trace is an optional computed comparison.",
+  "citation": "Abbott, B.P. et al., 2021. Open data from the first and second observing runs of Advanced LIGO and Advanced Virgo. SoftwareX, 13, 100658."
+}

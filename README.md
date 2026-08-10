@@ -1,88 +1,136 @@
 # Gravitational Wave Chirp Lab
 
-Interactive compact binary inspiral visualiser for exploring chirp mass, frequency evolution, and strain scaling.
+An observation-led browser instrument for the first detected binary black-hole signal,
+GW150914. The default waveform and time-frequency display use public calibrated detector strain
+from the Gravitational Wave Open Science Center (GWOSC). A leading-order post-Newtonian (PN)
+inspiral can be switched on as a comparison overlay; it is never presented as measured data.
 
-**Author:** Biswajit Jana
+## Observational Product
 
-## Research Motivation
+The instrument loads the official GWOSC `GW150914-v3` 32-second, 4096 Hz calibrated strain
+file for the selected detector:
 
-Gravitational-wave chirps reveal the final inspiral of compact binaries. This lab gives an intuitive, browser-based view of how component masses and distance change the waveform amplitude and frequency sweep.
+| Detector | Official GWOSC product |
+| --- | --- |
+| Hanford H1 | `H-H1_GWOSC_4KHZ_R1-1126259447-32.txt.gz` |
+| Livingston L1 | `L-L1_GWOSC_4KHZ_R1-1126259447-32.txt.gz` |
 
-## Model Assumptions
+Source endpoint: [GWOSC GW150914-v3 strain-file API](https://gwosc.org/api/v2/event-versions/GW150914-v3/strain-files?format=api).
 
-The browser model uses a Newtonian-order chirp-inspired approximation. The chirp mass is:
+The event cursor is centred at GPS `1126259462.423`. The worker performs the display
+conditioning transparently:
+
+1. Decompress the official ASCII strain product in the worker.
+2. Extract the selected event-centred time window.
+3. Remove the local mean, apply an edge taper and a cosine-transition `35-350 Hz` bandpass.
+4. Compute a Hann-window STFT of the conditioned measured strain.
+
+Exports contain both the original calibrated samples in the chosen window and the conditioned
+samples displayed by the console. When the PN switch is enabled, a separate clearly named
+overlay column is added.
+
+## Simulation Overlay
+
+Enable `PN COMPARISON` to draw a physically scaled leading-order inspiral signal in amber over
+the observed cyan trace. The comparison controls affect the model only; they cannot alter the
+GWOSC data.
+
+For source-frame component masses `m1` and `m2`, the chirp mass is:
 
 ```text
-Mc = (m1 m2)^(3/5) / (m1 + m2)^(1/5)
+Mchirp = (m1 m2)^(3/5) / (m1 + m2)^(1/5)
 ```
 
-The displayed strain is scaled approximately as:
+The quadrupole, leading-order gravitational-wave frequency evolution for a quasi-circular
+inspiral is:
 
 ```text
-h proportional to Mc^(5/3) f^(2/3) / D
+df/dt = (96/5) pi^(8/3) (G Mchirp / c^3)^(5/3) f^(11/3)
 ```
 
-The leading-order frequency evolution is:
+The optional waveform is:
 
 ```text
-df/dt = (96/5) pi^(8/3) (G Mc / c^3)^(5/3) f^(11/3)
+A(f) = 4 (G Mchirp)^(5/3) (pi f)^(2/3) / (c^4 D_L)
+h+(t) = A(f) [(1 + cos^2 i) / 2] cos(phi(t))
+dphi/dt = 2 pi f
 ```
 
-The final reference frequency uses the rough Schwarzschild ISCO scaling:
+The worker advances this model with RK4 and aligns the latest generated model sample to the
+published event time. This simple overlay omits higher PN terms, spins, merger-ringdown,
+detector antenna response, template matching and parameter inference.
+
+## Architecture
 
 ```text
-f_ISCO ~= 4400 Hz / (M / Msun)
+index.html
+assets/
+  css/style.css             Mission-control interface
+  js/app.js                 Canvas renderer and observed/model labelling
+  js/physicsWorker.js       GWOSC fetch, conditioning, STFT and optional PN evolution
+data/
+  observations/
+    gwosc_GW150914_metadata.json
+    H-H1_GWOSC_4KHZ_R1-1126259447-32.txt.gz  optional local official cache
+    L-L1_GWOSC_4KHZ_R1-1126259447-32.txt.gz  optional local official cache
+tools/
+  fetch_gwosc_observations.py       Acquire and hash-check official local cache
+  validate_observations.py          Validate retained calibrated segments
 ```
 
-## Features
+The main thread never filters detector strain, evaluates the PN equations or computes the
+spectrogram. Those operations are isolated in `physicsWorker.js`; the UI receives compact
+typed-array render products.
 
-- Live waveform plot.
-- Frequency evolution plot.
-- Controls for primary mass, secondary mass, distance, start frequency, and final seconds.
-- Chirp mass, ISCO frequency, and relative strain readouts.
-- Static GitHub Pages-ready implementation.
+## Run
 
-## Research Use Cases
-
-- Demonstrating why chirp mass is the best-measured leading-order compact-binary mass combination.
-- Building intuition for how mass and distance change the inspiral track before using real waveform libraries.
-- Producing synthetic waveform-like CSVs for teaching signal processing, matched-filter intuition, or plotting pipelines.
-- Comparing leading-order scaling against higher-order waveform models in a future validation notebook.
-
-## Running Locally
-
-Open `index.html` in a browser.
-
-Optional Python generation and validation:
+Serve this directory over HTTP:
 
 ```bash
-python tools/generate_chirp.py
-python tools/validate_model.py
+python -m http.server 8000
 ```
 
-## README Image Prompt
+Open `http://localhost:8000/`. The worker first attempts locally retained official files and,
+when they are absent, retrieves the same calibrated products from GWOSC. If neither source can
+be reached, the console reports a data-load error rather than substituting a simulation.
 
-A README hero image prompt is provided in [`docs/image_prompt.md`](docs/image_prompt.md). It is designed for a serious compact-binary research visual rather than a generic space illustration.
+For offline use, retrieve and validate the official local cache:
 
-## Limitations
+```bash
+python tools/fetch_gwosc_observations.py
+python tools/validate_observations.py
+```
 
-This is not a numerical relativity model and does not include detector antenna response, post-Newtonian phase terms, spins, eccentricity, merger-ringdown physics, or real LIGO/Virgo/KAGRA data.
+## Export Columns
 
-## Research References
+Observation-only export:
 
-- Peters & Mathews, 1963, gravitational radiation from point masses in Keplerian orbits.
-- Sathyaprakash & Schutz, 2009, *Physics, Astrophysics and Cosmology with Gravitational Waves*.
-- Abbott et al., 2016, *Observation of Gravitational Waves from a Binary Black Hole Merger*.
-- Maggiore, *Gravitational Waves, Volume 1*.
+```text
+relative_time_seconds,gps_time_seconds,raw_gwosc_strain,conditioned_gwosc_strain
+```
 
-## Future Upgrades
+With PN comparison enabled:
 
-- Add post-Newtonian phase terms.
-- Add detector noise curves.
-- Add matched-filter SNR toy model.
-- Add Python-generated waveform comparison datasets.
-- Add LIGO Open Science Center event overlays with proper data citations.
+```text
+relative_time_seconds,gps_time_seconds,raw_gwosc_strain,conditioned_gwosc_strain,pn_overlay_strain
+```
 
-## Topics
+## References
 
-`astrophysics`, `gravitational-waves`, `black-holes`, `signal-processing`, `scientific-visualisation`, `javascript`, `github-pages`
+Abbott, B.P. et al., 2016. Observation of gravitational waves from a binary black hole merger.
+*Physical Review Letters*, 116, 061102. https://doi.org/10.1103/PhysRevLett.116.061102.
+
+Abbott, R. et al., 2021. Open data from the first and second observing runs of Advanced LIGO
+and Advanced Virgo. *SoftwareX*, 13, 100658.
+https://doi.org/10.1016/j.softx.2021.100658.
+
+Blanchet, L., 2014. Gravitational radiation from post-Newtonian sources and inspiralling
+compact binaries. *Living Reviews in Relativity*, 17(1), p.2.
+https://doi.org/10.12942/lrr-2014-2.
+
+Peters, P.C., 1964. Gravitational radiation and the motion of two point masses.
+*Physical Review*, 136(4B), p.B1224. https://doi.org/10.1103/PhysRev.136.B1224.
+
+## Licence
+
+Released under the MIT Licence. See `LICENSE`.
