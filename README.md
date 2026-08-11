@@ -232,6 +232,21 @@ With PN comparison enabled:
 relative_time_seconds,gps_time_seconds,raw_gwosc_strain,conditioned_gwosc_strain,pn_overlay_strain
 ```
 
+## What the Mass Ratio Tells Us: Why GW150914 Was Such a Strong Signal
+
+The DATASET tile now reports the total mass and the **symmetric mass ratio**
+`eta = m1 m2 / (m1+m2)^2`, the standard post-Newtonian mass parameter (`eta = 0.25` for
+exactly equal masses, decreasing toward 0 for very asymmetric binaries -- it directly sets
+the chirp-mass-to-total-mass ratio and therefore the waveform amplitude for a given distance).
+
+At the default masses (GW150914's real measured values, `36 + 29 Msun`), `eta ~ 0.247` --
+very close to the equal-mass maximum. This is not a coincidence worth glossing over: GW150914
+was detectable at all partly *because* its component masses were close to equal, which
+maximises the radiated gravitational-wave luminosity for a given total mass. A binary with the
+same total mass but a much more asymmetric mass ratio (e.g. `50 + 15 Msun`) radiates less
+efficiently and produces a weaker signal at the same distance -- drag `PRIMARY MASS` and
+`SECONDARY MASS` apart while keeping their sum roughly fixed and watch `eta` drop toward zero.
+
 ## References
 
 Abbott, B.P. et al., 2016. Observation of gravitational waves from a binary black hole merger.

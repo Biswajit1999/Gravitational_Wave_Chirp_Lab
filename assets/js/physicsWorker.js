@@ -375,6 +375,11 @@ function summarise(parameters, observed, model, spectrum, started) {
     modelOverlay: Boolean(model),
     chirpMassSolar: parameters.chirpMassSolar,
     totalMassSolar: parameters.totalMassSolar,
+    // Symmetric mass ratio eta = m1 m2 / (m1+m2)^2, the standard post-Newtonian mass
+    // parameter (eta = 0.25 for equal masses, decreasing for more asymmetric binaries).
+    // At GW150914's real measured masses (36+29 Msun) this is ~0.2472 -- very close to
+    // equal-mass, which is why GW150914 was such a strong, easily detected signal.
+    symmetricMassRatio: (parameters.mass1Solar * parameters.mass2Solar) / (parameters.totalMassSolar ** 2),
     fIscoHz: parameters.fIscoHz,
     modelFinalFrequencyHz: model ? model.frequencyHz[model.frequencyHz.length - 1] : null,
     modelTerminatedAtIsco: model ? model.terminatedAtIsco : false,

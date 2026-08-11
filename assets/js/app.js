@@ -197,7 +197,7 @@
 
   function writeMetadata(data) {
     output.dataset.textContent = `GW150914 / ${data.detector}`;
-    output.product.textContent = "GWOSC V3 / 4 KHZ";
+    output.product.textContent = `M_total ${data.totalMassSolar.toFixed(1)} Msun / eta ${data.symmetricMassRatio.toFixed(4)}`;
     output.filter.textContent = "35-350 Hz";
     output.peakStrain.textContent = data.peakObservedStrain.toExponential(4);
     output.gps.textContent = data.eventGpsSeconds.toFixed(3);
