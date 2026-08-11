@@ -90,6 +90,7 @@ footer {
   display: flex; font: .58rem var(--mono); justify-content: space-between; letter-spacing: .15em; padding: 0 .8rem;
 }
 footer span { color: var(--cyan); }
+.site-links { display: flex; gap: .8rem; } .site-links a { color: var(--muted); text-decoration: none; } .site-links a:hover { color: var(--cyan); }
 @media (max-width: 1300px) {
   .command-bar { grid-template-columns: 1fr 1fr; }
   nav { grid-column: 1 / -1; }
