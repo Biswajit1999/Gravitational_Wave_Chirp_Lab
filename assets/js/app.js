@@ -69,7 +69,7 @@
         this.canvas.height = Math.round(height * ratio);
       }
       this.ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      this.ctx.fillStyle = "#080c15";
+      this.ctx.fillStyle = "#171a21";
       this.ctx.fillRect(0, 0, width, height);
       return { ctx: this.ctx, width, height };
     }
@@ -242,7 +242,7 @@
       ctx.lineTo(box.left + box.w, y);
       ctx.stroke();
     }
-    ctx.fillStyle = "#7f94ab";
+    ctx.fillStyle = "#8b93a3";
     ctx.font = '10px "Roboto Mono", Consolas, monospace';
     ctx.fillText(yLabel, 9, box.top + 7);
     ctx.textAlign = "right";
@@ -252,7 +252,7 @@
   }
 
   function ticks(ctx, box, xMinimum, xMaximum, yMinimum, yMaximum, xFormatter, yFormatter) {
-    ctx.fillStyle = "#7f94ab";
+    ctx.fillStyle = "#8b93a3";
     ctx.font = '10px "Roboto Mono", Consolas, monospace';
     for (let tick = 0; tick <= 5; tick += 1) {
       const ratio = tick / 5;
@@ -294,7 +294,7 @@
     ctx.moveTo(box.left, box.top + box.h / 2);
     ctx.lineTo(box.left + box.w, box.top + box.h / 2);
     ctx.stroke();
-    ctx.strokeStyle = "#32d5e6";
+    ctx.strokeStyle = "#6f8fd6";
     ctx.lineWidth = 1.25;
     ctx.beginPath();
     for (let index = 0; index < observed.times.length; index += 1) {
@@ -303,10 +303,10 @@
       if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
     ctx.stroke();
-    ctx.fillStyle = "#32d5e6";
+    ctx.fillStyle = "#6f8fd6";
     ctx.fillText("GWOSC CONDITIONED", box.left + 8, box.top + 13);
     if (model) {
-      ctx.strokeStyle = "#ffbd59";
+      ctx.strokeStyle = "#f2b866";
       ctx.lineWidth = 1.3;
       ctx.beginPath();
       for (let index = 0; index < model.times.length; index += 1) {
@@ -315,7 +315,7 @@
         if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
       ctx.stroke();
-      ctx.fillStyle = "#ffbd59";
+      ctx.fillStyle = "#f2b866";
       ctx.fillText("PN OVERLAY", box.left + 126, box.top + 13);
     }
     cursorLine(ctx, box, metadata);
@@ -356,7 +356,7 @@
     const yMaximum = metadata.fIscoHz * 1.05;
     const box = frame(ctx, width, height, "TIME FROM EVENT (s)", "Hz");
     ticks(ctx, box, metadata.timeMinimumSeconds, metadata.timeMaximumSeconds, 0, yMaximum, (v) => v.toFixed(1), (v) => v.toFixed(0));
-    ctx.strokeStyle = "#ffbd59";
+    ctx.strokeStyle = "#f2b866";
     ctx.lineWidth = 1.8;
     ctx.beginPath();
     for (let index = 0; index < track.times.length; index += 1) {
@@ -371,7 +371,7 @@
   function cursorLine(ctx, box, metadata) {
     if (!state.cursor) return;
     const x = xPosition(state.cursor.timeSeconds, box, metadata);
-    ctx.strokeStyle = "#45df9c";
+    ctx.strokeStyle = "#6fcf97";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(x, box.top);
@@ -384,7 +384,7 @@
   }
 
   function waiting(ctx, width, height, message = "AWAITING GWOSC PRODUCT") {
-    ctx.fillStyle = "#7f94ab";
+    ctx.fillStyle = "#8b93a3";
     ctx.font = '12px "Roboto Mono", Consolas, monospace';
     ctx.textAlign = "center";
     ctx.fillText(message, width / 2, height / 2);
