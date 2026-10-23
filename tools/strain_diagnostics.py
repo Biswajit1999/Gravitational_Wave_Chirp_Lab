@@ -102,6 +102,13 @@ class LagDiagnostic:
 def _bandpass(x: np.ndarray, fs: float, low_hz: float, high_hz: float) -> np.ndarray:
     if low_hz <= 0 or high_hz <= low_hz or high_hz >= fs / 2:
         raise ValueError("band must lie strictly inside (0, Nyquist)")
+    # A finite, untapered strain window can turn low-frequency endpoint drift
+    # into a *shared* FFT edge artifact, producing spurious zero-lag coherence.
+    # Remove the local linear trend and taper both ends before filtering.
+    t = np.linspace(-1.0, 1.0, len(x))
+    centered = x - x.mean()
+    slope = np.dot(centered, t) / np.dot(t, t)
+    detrended = (centered - slope * t) * np.hanning(len(x))
     f = np.fft.rfftfreq(len(x), 1 / fs)
     # Cosine shoulders reduce ringing from an abrupt rectangular band edge.
     width = min((high_hz - low_hz) / 8, low_hz / 3)
@@ -112,7 +119,7 @@ def _bandpass(x: np.ndarray, fs: float, low_hz: float, high_hz: float) -> np.nda
     hi = (f > high_hz) & (f <= high_hz + width)
     response[lo] = 0.5 * (1 - np.cos(np.pi * (f[lo] - (low_hz - width)) / width))
     response[hi] = 0.5 * (1 + np.cos(np.pi * (f[hi] - high_hz) / width))
-    return np.fft.irfft(np.fft.rfft(x - x.mean()) * response, n=len(x))
+    return np.fft.irfft(np.fft.rfft(detrended) * response, n=len(x))
 
 
 def detector_lag(a: np.ndarray, b: np.ndarray, sample_rate_hz: float,

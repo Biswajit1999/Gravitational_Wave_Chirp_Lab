@@ -91,6 +91,15 @@ class CoincidenceTests(unittest.TestCase):
         self.assertAlmostEqual(first.correlation, second.correlation)
         self.assertLess(abs(first.correlation), 0.15)
 
+    def test_linear_drift_does_not_create_false_coherence(self):
+        fs = 1024
+        rng = np.random.default_rng(190)
+        t = np.arange(4096) / fs
+        a = 1e-18 * (t - 2) + rng.normal(0, 1e-21, len(t))
+        b = -2e-18 * (t - 2) + rng.normal(0, 1e-21, len(t))
+        result = detector_lag(a, b, fs, 0.012, 35, 300)
+        self.assertLess(abs(result.correlation), 0.2)
+
     def test_reject_mismatched_detector_samples(self):
         with self.assertRaises(ValueError):
             detector_lag(np.ones(100), np.ones(101), 1024)
