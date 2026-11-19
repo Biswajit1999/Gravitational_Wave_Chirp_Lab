@@ -1,0 +1,21 @@
+{
+  "project": "Gravitational Wave Chirp Lab",
+  "repository": "https://github.com/Biswajit1999/Gravitational_Wave_Chirp_Lab",
+  "files": [
+    {
+      "label": "Validation summary",
+      "path": "data/validation_summary.csv",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Synthetic chirp",
+      "path": "data/synthetic_chirp.csv",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Gwosc GW150914 metadata",
+      "path": "data/observations/gwosc_GW150914_metadata.json",
+      "role": "Data and provenance"
+    }
+  ]
+}

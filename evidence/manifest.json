@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "project": "Gravitational Wave Chirp Lab",
+  "repository": "https://github.com/Biswajit1999/Gravitational_Wave_Chirp_Lab",
+  "files": [
+    {
+      "label": "Validation summary",
+      "path": "data/validation_summary.csv",
+      "role": "Data and provenance",
+      "bytes": 375,
+      "sha256": "99304606f7ca43301ef809d268f95731757aebc913fc9b12288f1122ff85a865",
+      "hash_basis": "LF-normalised text",
+      "format": "CSV",
+      "rows": 6,
+      "columns": 4,
+      "headers": [
+        "check",
+        "value",
+        "expected",
+        "passed"
+      ],
+      "preview": [
+        [
+          "chirp_mass_symmetry",
+          "0.0",
+          "0.0",
+          "True"
+        ],
+        [
+          "positive_frequency_derivative",
+          "8.871111063976237",
+          "> 0",
+          "True"
+        ],
+        [
+          "frequency_monotonic",
+          "47.64679683942977",
+          ">= 0",
+          "True"
+        ],
+        [
+          "isco_not_exceeded",
+          "67.64679683942977",
+          "67.64679683942977",
+          "True"
+        ]
+      ]
+    },
+    {
+      "label": "Synthetic chirp",
+      "path": "data/synthetic_chirp.csv",
+      "role": "Data and provenance",
+      "bytes": 318621,
+      "sha256": "2db654a007413b1a52f076ca8c4e25020485355d795656e64ae2eedfb77699fc",
+      "hash_basis": "LF-normalised text",
+      "format": "CSV",
+      "rows": 3330,
+      "columns": 5,
+      "headers": [
+        "time_seconds",
+        "strain_plus",
+        "frequency_hz",
+        "dfdt_hz_per_second",
+        "amplitude"
+      ],
+      "preview": [
+        [
+          "0.0",
+          "4.853347643523849e-22",
+          "20.0",
+          "8.871111063976237",
+          "4.853347643523849e-22"
+        ],
+        [
+          "0.000244140625",
+          "4.85141377314087e-22",
+          "20.002166228677254",
+          "8.87463466291219",
+          "4.853698085892756e-22"
+        ],
+        [
+          "0.00048828125",
+          "4.844911904790427e-22",
+          "20.00433331790329",
+          "8.878160679987422",
+          "4.854048654818985e-22"
+        ],
+        [
+          "0.000732421875",
+          "4.833846016311813e-22",
+          "20.00650126826876",
+          "8.881689117560853",
+          "4.854399350384827e-22"
+        ]
+      ]
+    },
+    {
+      "label": "Gwosc GW150914 metadata",
+      "path": "data/observations/gwosc_GW150914_metadata.json",
+      "role": "Data and provenance",
+      "bytes": 1615,
+      "sha256": "48e7f605b11ecead9bc198489c47f852b243036214dcdce13f420add2d614fd9",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "dataset",
+        "event",
+        "eventGpsSeconds",
+        "segmentStartGpsSeconds",
+        "durationSeconds",
+        "sampleRateHz",
+        "sourceApi"
+      ],
+      "arrays": {}
+    }
+  ]
+}
