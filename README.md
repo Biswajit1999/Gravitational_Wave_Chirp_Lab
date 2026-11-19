@@ -7,6 +7,12 @@ inspiral can be switched on as a comparison overlay; it is never presented as me
 
 ## Research evidence and downloads
 
+
+- [Download the machine-readable table profiles](evidence/table-profiles.json) for 2 archived tables. Open `table-evidence.html` from the checkout for the coverage chart.
+- Start with [Validation summary](data/validation_summary.csv), [Synthetic chirp](data/synthetic_chirp.csv), [Gwosc GW150914 metadata](data/observations/gwosc_GW150914_metadata.json).
+
+To rebuild the table profiles after rebuilding the evidence inventory, run `python scripts/profile_evidence_tables.py` followed by `python scripts/render_table_profiles.py`.
+
 [Open the evidence browser file](evidence.html) for 3 selected files, including [`validation_summary.csv`](data/validation_summary.csv). Each file has a download link and SHA-256 digest. Serve this checkout with `python -m http.server` to view the static browser.
 
 Rebuild the inventory and browser with `python scripts/evidence_catalog.py` and `python scripts/render_evidence_page.py`.
