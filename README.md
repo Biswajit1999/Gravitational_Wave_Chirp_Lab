@@ -5,6 +5,12 @@ GW150914. The default waveform and time-frequency display use public calibrated 
 from the Gravitational Wave Open Science Center (GWOSC). A leading-order post-Newtonian (PN)
 inspiral can be switched on as a comparison overlay; it is never presented as measured data.
 
+## Research evidence and downloads
+
+[Open the evidence browser file](evidence.html) for 3 selected files, including [`validation_summary.csv`](data/validation_summary.csv). Each file has a download link and SHA-256 digest. Serve this checkout with `python -m http.server` to view the static browser.
+
+Rebuild the inventory and browser with `python scripts/evidence_catalog.py` and `python scripts/render_evidence_page.py`.
+
 ## Scientific Background
 
 ### Gravitational waves from compact binary inspirals

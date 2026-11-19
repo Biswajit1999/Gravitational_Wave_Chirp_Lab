@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gravitational Wave Chirp Lab · Research evidence</title>
+<style>
+:root{color-scheme:light;background:#f1f3f4;color:#162631;font:1rem/1.55 system-ui,sans-serif}
+*{box-sizing:border-box}main{max-width:74rem;margin:auto;padding:clamp(1rem,5vw,4rem)}
+header{background:#142b3a;color:#fff;padding:clamp(1rem,3vw,2.75rem);border-radius:12px}
+h1{max-width:30ch;font-size:clamp(1.7rem,4.5vw,3.2rem);line-height:1.12;margin:.5rem 0 0}
+h2{font-size:clamp(1.35rem,3vw,1.9rem);margin:2rem 0 .75rem}h3{font-size:1.09rem;margin:0}
+header p,figcaption,.scope{max-width:76ch}a{color:#0b536e;text-underline-offset:.16em}
+header a{color:#b2e5f7}nav{display:flex;gap:.75rem 1.2rem;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:.8rem}
+article,figure{background:#fff;border:1px solid #cdd6dc;border-radius:9px;padding:1rem;min-width:0}
+figure{margin:1rem 0}img{display:block;max-width:100%;height:auto;margin:auto}
+figcaption{margin-top:.6rem;color:#3b5362}.meta{color:#3b5362;font-size:.9rem}
+details{margin:.55rem 0}summary{cursor:pointer}code{overflow-wrap:anywhere}
+.table-scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:.85rem}
+th,td{text-align:left;vertical-align:top;padding:.4rem;border-bottom:1px solid #dce3e7}
+a:focus-visible,summary:focus-visible{outline:2px solid #7b4107;outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+<header>
+<nav aria-label="Evidence links"><a href="https://github.com/Biswajit1999/Gravitational_Wave_Chirp_Lab#readme">Methods and references</a><a href="evidence/manifest.json" download>Download the file inventory</a></nav>
+<h1>Gravitational Wave Chirp Lab</h1>
+<p>Browse 3 versioned evidence files. Table previews simply display stored rows. Consult the project report for the source, processing steps, and inference assumptions.</p>
+</header>
+
+<section><h2>Data and provenance</h2><div class="grid"><article><h3><a href="data/validation_summary.csv">Validation summary</a></h3><p class="meta">CSV · 375 bytes · 6 data records · 4 columns</p><details><summary>Preview the first records</summary><div class="table-scroll"><table aria-label="First records from this file"><thead><tr><th scope="col">check</th><th scope="col">value</th><th scope="col">expected</th><th scope="col">passed</th></tr></thead><tbody><tr><td>chirp_mass_symmetry</td><td>0.0</td><td>0.0</td><td>True</td></tr><tr><td>positive_frequency_derivative</td><td>8.871111063976237</td><td>&gt; 0</td><td>True</td></tr><tr><td>frequency_monotonic</td><td>47.64679683942977</td><td>&gt;= 0</td><td>True</td></tr><tr><td>isco_not_exceeded</td><td>67.64679683942977</td><td>67.64679683942977</td><td>True</td></tr></tbody></table></div></details><p><a href="data/validation_summary.csv" download>Download CSV</a></p><details><summary>SHA-256, LF-normalised text</summary><code>99304606f7ca43301ef809d268f95731757aebc913fc9b12288f1122ff85a865</code></details></article><article><h3><a href="data/synthetic_chirp.csv">Synthetic chirp</a></h3><p class="meta">CSV · 318,621 bytes · 3,330 data records · 5 columns</p><details><summary>Preview the first records</summary><div class="table-scroll"><table aria-label="First records from this file"><thead><tr><th scope="col">time_seconds</th><th scope="col">strain_plus</th><th scope="col">frequency_hz</th><th scope="col">dfdt_hz_per_second</th><th scope="col">amplitude</th></tr></thead><tbody><tr><td>0.0</td><td>4.853347643523849e-22</td><td>20.0</td><td>8.871111063976237</td><td>4.853347643523849e-22</td></tr><tr><td>0.000244140625</td><td>4.85141377314087e-22</td><td>20.002166228677254</td><td>8.87463466291219</td><td>4.853698085892756e-22</td></tr><tr><td>0.00048828125</td><td>4.844911904790427e-22</td><td>20.00433331790329</td><td>8.878160679987422</td><td>4.854048654818985e-22</td></tr><tr><td>0.000732421875</td><td>4.833846016311813e-22</td><td>20.00650126826876</td><td>8.881689117560853</td><td>4.854399350384827e-22</td></tr></tbody></table></div></details><p><a href="data/synthetic_chirp.csv" download>Download CSV</a></p><details><summary>SHA-256, LF-normalised text</summary><code>2db654a007413b1a52f076ca8c4e25020485355d795656e64ae2eedfb77699fc</code></details></article><article><h3><a href="data/observations/gwosc_GW150914_metadata.json">Gwosc GW150914 metadata</a></h3><p class="meta">JSON · 1,615 bytes</p><p><a href="data/observations/gwosc_GW150914_metadata.json" download>Download JSON</a></p><details><summary>SHA-256, LF-normalised text</summary><code>48e7f605b11ecead9bc198489c47f852b243036214dcdce13f420add2d614fd9</code></details></article></div></section>
+<p class="scope">SHA-256 values verify the stored files. They do not independently validate the scientific analysis. Rebuild this page with <code>python scripts/evidence_catalog.py</code> followed by <code>python scripts/render_evidence_page.py</code>.</p>
+</main>
+</body>
+</html>
