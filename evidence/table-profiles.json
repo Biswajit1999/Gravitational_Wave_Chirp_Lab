@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "project": "Gravitational Wave Chirp Lab",
+  "tables": [
+    {
+      "path": "data/validation_summary.csv",
+      "label": "Validation summary",
+      "role": "Data and provenance",
+      "rows": 6,
+      "width_mismatches": 0,
+      "columns": [
+        {
+          "name": "check",
+          "blank": 0,
+          "text": 6,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "value",
+          "blank": 0,
+          "text": 0,
+          "finite": 6,
+          "nonfinite": 0,
+          "minimum": 0.0,
+          "maximum": 67.64679683942977
+        },
+        {
+          "name": "expected",
+          "blank": 0,
+          "text": 3,
+          "finite": 3,
+          "nonfinite": 0
+        },
+        {
+          "name": "passed",
+          "blank": 0,
+          "text": 6,
+          "finite": 0,
+          "nonfinite": 0
+        }
+      ]
+    },
+    {
+      "path": "data/synthetic_chirp.csv",
+      "label": "Synthetic chirp",
+      "role": "Data and provenance",
+      "rows": 3330,
+      "width_mismatches": 0,
+      "columns": [
+        {
+          "name": "time_seconds",
+          "blank": 0,
+          "text": 0,
+          "finite": 3330,
+          "nonfinite": 0,
+          "minimum": 0.0,
+          "maximum": 0.812744140625
+        },
+        {
+          "name": "strain_plus",
+          "blank": 0,
+          "text": 0,
+          "finite": 3330,
+          "nonfinite": 0,
+          "minimum": -1.091762476168201e-21,
+          "maximum": 1.0371045131077157e-21
+        },
+        {
+          "name": "frequency_hz",
+          "blank": 0,
+          "text": 0,
+          "finite": 3330,
+          "nonfinite": 0,
+          "minimum": 20.0,
+          "maximum": 67.64679683942977
+        },
+        {
+          "name": "dfdt_hz_per_second",
+          "blank": 0,
+          "text": 0,
+          "finite": 3330,
+          "nonfinite": 0,
+          "minimum": 8.871111063976237,
+          "maximum": 773.4660127092367
+        },
+        {
+          "name": "amplitude",
+          "blank": 0,
+          "text": 0,
+          "finite": 3330,
+          "nonfinite": 0,
+          "minimum": 4.853347643523849e-22,
+          "maximum": 1.093585882251144e-21
+        }
+      ]
+    }
+  ],
+  "excluded": []
+}
